@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manas Travel - Главная{% endblock %}
+{% block nav_home %}active{% endblock %}
+
+{% block content %}
+     
+
+{% if is_search %}
+<!-- ИЗДӨӨ НАТЫЙЖАЛАРЫ -->
+<div class="search-results-section mt-5"> ">
+    <div class="container py-5">
+        <h2 class="section-title text-center mb-4">Издөө натыйжалары: "{{ query }}"</h2>
+        <a href="{% url 'home' %}" class="btn btn-secondary mb-4">← Артка кайтуу</a>
+        
+        {% if search_results %}
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3 g-md-4">
+            {% for tour in search_results %}
+            <div class="col">
+                <div class="tour-card shadow-sm">
+                    <div class="img-wrapper">
+                        <img src="{{ tour.image.url }}" alt="{{ tour.title }}">
+                        <div class="tour-duration">{{ tour.duration }}</div>
+                    </div>
+                    <div class="tour-card-body">
+                        <h5 class="tour-title">{{ tour.title }}</h5>
+                        <p class="tour-desc">{{ tour.description }}</p>
+                        <div class="tour-footer">
+                            <span class="tour-price">{{ tour.price }} с.</span>
+                            <a href="{% url 'tour_detail' tour.id %}" class="tour-btn">Көрүү</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5 ">
+            <h4>Тилекке каршы, "{{ query }}" боюнча эч нерсе табылган жок.</h4>
+            <p class="text-muted">Башка сөз менен издеп көрүңүз!</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+<!-- ИЗДӨӨ НАТЫЙЖАЛАРЫ АЯГЫ -->
+{% else %}
+
+
+<!-- СЛАЙДЕР (негизги бет) -->
+<div id="mainTravelSlider" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        {% for slide in slides %}
+            <button type="button" data-bs-target="#mainTravelSlider" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></button>
+        {% endfor %}
+    </div>
+
+    <div class="carousel-inner">
+        {% for slide in slides %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}" style="background-image: url('{{ slide.image_url }}');">
+            <div class="slider-overlay">
+                <div class="promo-card">
+                    <div class="promo-badge">{{ slide.badge }}</div>
+                    <h2>{{ slide.title }}</h2>
+                    <p>{{ slide.description }}</p>
+                    <div class="promo-price">болгону <span>${{ slide.price }}</span></div>
+                    <div class="promo-buttons">
+                        <button class="btn btn-outline-light btn-open-modal">Заявка калтыруу</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <p class="text-center text-white p-5">Админкадан азырынча слайд кошула элек!</p>
+        {% endfor %}
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#mainTravelSlider" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#mainTravelSlider" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+{% endif %}
+<!-- header-fon  end-->
+
+{% if not is_search %}
+ <!-- BLOK   1-->  
+<div class="container my-5">
+    <h2 class="section-title text-center mb-5">Популярдуу Турлар</h2>
+    
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3 g-md-4">
+        
+        {% for tour in tours %}
+        <div class="col">
+            <div class="tour-card shadow-sm">
+                <div class="img-wrapper">
+                    <img src="{{ tour.image.url }}" alt="{{ tour.title }}">
+                    <div class="tour-duration">{{ tour.duration }}</div>
+                </div>
+                <div class="tour-card-body">
+                    <h5 class="tour-title">{{ tour.title }}</h5>
+                    <p class="tour-desc">{{ tour.description }}</p>
+                    <div class="tour-footer">
+                        <span class="tour-price">{{ tour.price }} с.</span>
+                        <a href="{% url 'tour_detail' tour.id %}" class="tour-btn">Көрүү</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <p class="text-center p-5 w-100">Админкадан азырынча популярдуу турлар кошула элек!</p>
+        {% endfor %}
+
+    </div>
+</div>
+<!-- BLOK  end 2 --> 
+{% endif %}
+
+<!-- коментарии -->
+<section class="reviews-section">
+    <div class="container">
+        <div class="review-card shadow-lg">
+            <h2 class="review-title">Отзывы наших клиентов <span>4.8 ★</span></h2>
+            
+            <form method="POST" action="{% url 'home' %}">
+                {% csrf_token %} <div class="mb-3">
+                    <label class="form-label">Ваше имя</label>
+                    <input type="text" name="name" class="form-control custom-input" placeholder="Введите ваше имя" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label d-block">Ваша оценка:</label>
+                    <div class="star-rating">
+                        <input type="radio" name="stars" id="star-5" value="5">
+                        <label for="star-5">★</label>
+                        <input type="radio" name="stars" id="star-4" value="4">
+                        <label for="star-4">★</label>
+                        <input type="radio" name="stars" id="star-3" value="3">
+                        <label for="star-3">★</label>
+                        <input type="radio" name="stars" id="star-2" value="2">
+                        <label for="star-2">★</label>
+                        <input type="radio" name="stars" id="star-1" value="1">
+                        <label for="star-1">★</label>
+                    </div>
+                    
+                <div class="mb-4">
+                    <label class="form-label">Ваш комментарий</label>
+                    <textarea name="text" class="form-control custom-input" rows="4" placeholder="Напишите ваше мнение о туре..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-send">Опубликовать отзыв</button>
+            </form>
+
+            <div class="divider"></div>
+
+            <!-- Базадан алынган комментарийлер (биринчи 2 ар дайым көрүнөт) -->
+            {% for review in reviews|slice:":2" %}
+            <div class="review-item">
+                <div class="review-header">
+                    <strong>{{ review.name }}</strong>
+                    <span class="review-stars">
+                        {% for i in "x"|rjust:review.stars %}★{% endfor %}
+                    </span>
+                </div>
+                <p class="review-text">{{ review.text }}</p>
+                <small class="text-muted">{{ review.created_at|date:"d.m.Y" }}</small>
+            </div>
+            {% empty %}
+            <p class="text-center text-muted">Азырынча пикирлер жок. Биринчи болуп пикир калтырыңыз!</p>
+            {% endfor %}
+
+            <!-- Калган комментарийлер (жашыруун, басканда ачылат) -->
+            {% if reviews|length > 2 %}
+            <div id="extra-reviews" class="all-reviews-hidden">
+                {% for review in reviews|slice:"2:" %}
+                <div class="review-item">
+                    <div class="review-header">
+                        <strong>{{ review.name }}</strong>
+                        <span class="review-stars">
+                            {% for i in "x"|rjust:review.stars %}★{% endfor %}
+                        </span>
+                    </div>
+                    <p class="review-text">{{ review.text }}</p>
+                    <small class="text-muted">{{ review.created_at|date:"d.m.Y" }}</small>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="divider"></div>
+
+            <div class="text-center">
+                <p class="reviews-count">Уже {{ reviews_count }} отзыва от путешественников</p>
+                {% if reviews|length > 2 %}
+                <button type="button" class="btn-read-more" onclick="toggleReviews()">Смотреть далее →</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+<!-- коментарии --> 
+
+
+
+{% if not is_search %}
+<!-- about start -->
+<section id="about" class="about-section">
+    {% if about_info %}
+    <div class="about-hero">
+        <div class="about-glass-card">
+            <span class="brand-badge">Manas Travel</span>
+            <h2>{{ about_info.title }}</h2>
+            <p>{{ about_info.description }}</p>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="services-grid">
+            <div class="service-item">
+                <div class="service-icon"></div>
+                <h3>Кыргызстан боюнча</h3>
+                <p>Ысык-Көл, Арсланбап, Сары-Челек, Ош</p>
+            </div>
+            <div class="service-item">
+                <div class="service-icon"></div>
+                <h3>Чет өлкөгө турлар</h3>
+                <p>Түркия, Дубай, Казакстан, Россия</p>
+            </div>
+            <div class="service-item">
+                <div class="service-icon"></div>
+                <h3>Комфорттуу транспорт</h3>
+                <p>Ыңгайлуу автобустар жана тажрыйбалуу айдоочулар</p>
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="why-us">
+                <h2 class="section-title">Эмне үчүн биз?</h2>
+                <div class="why-grid">
+                    <div class="why-chip">✔ Мыкты баалар</div>
+                    <div class="why-chip">✔ Коопсуздук</div>
+                    <div class="why-chip">✔ Тажрыйбалуу гиддер</div>
+                    <div class="why-chip">✔ Заманбап сервис</div>
+                    <div class="why-chip">✔ Тез каттоо</div>
+                    <div class="why-chip">✔ Жакшы сын-пикирлер</div>
+                </div>
+            </div>
+
+            <div class="stats-box">
+                <div class="stat-item">
+                    <h3>{{ about_info.stat_clients }}</h3>
+                    <p>Кардарлар</p>
+                </div>
+                <div class="stat-item">
+                    <h3>{{ about_info.stat_tours }}</h3>
+                    <p>Турлар</p>
+                </div>
+                <div class="stat-item">
+                    <h3>{{ about_info.stat_experience }}</h3>
+                    <p>Жылдык тажрыйба</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="map-section">
+            <h2 class="section-title">Биз картада</h2>
+            <div class="map-container">
+                <iframe src="{{ about_info.map_iframe_url }}" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+    {% else %}
+        <p class="text-center p-5">Админкадан 'Биз жөнүндө' маалыматы кошула элек!</p>
+    {% endif %}
+</section>
+<!-- about end -->
+{% endif %}
+
+
+
+<!--fon  -->
+</div>
+<!-- fon -->
+
+
+{% endblock %}

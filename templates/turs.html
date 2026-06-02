@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+ 
+{% block title %}Manas Travel - Все туры{% endblock %}
+{% block nav_tours %}active{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="section-title text-center mb-5">Бардык Турлар</h2>
+    
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3 g-md-4">
+        
+        {% for tour in tours %}
+        <div class="col">
+            <div class="tour-card shadow-sm">
+                <div class="img-wrapper">
+                    <img src="{{ tour.image.url }}" alt="{{ tour.title }}">
+                    <div class="tour-duration">{{ tour.duration }}</div>
+                </div>
+                <div class="tour-card-body">
+                    <h5 class="tour-title">{{ tour.title }}</h5>
+                    <p class="tour-desc">{{ tour.description }}</p>
+                    <div class="tour-footer">
+                        <span class="tour-price">{{ tour.price }} с.</span>
+                        <a href="{% url 'tour_detail' tour.id %}" class="tour-btn">Көрүү</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <p class="text-center p-5 w-100">Админкадан турлар кошула элек!</p>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

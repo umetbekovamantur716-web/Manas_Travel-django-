@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manas Travel - О компании{% endblock %}
+{% block nav_about %}active{% endblock %}
+
+{% block content %}
+<section class="about-section" style="padding-top: 100px;">
+    {% if about_info %}
+    <div class="about-hero">
+        <div class="about-glass-card">
+            <span class="brand-badge">Manas Travel</span>
+            <h2>{{ about_info.title }}</h2>
+            <p>{{ about_info.description }}</p>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="services-grid">
+            <div class="service-item">
+                <div class="service-icon">🗺️</div>
+                <h3>Кыргызстан боюнча</h3>
+                <p>Ысык-Көл, Арсланбап, Сары-Челек, Ош</p>
+            </div>
+            <div class="service-item">
+                <div class="service-icon">✈️</div>
+                <h3>Чет өлкөгө турлар</h3>
+                <p>Түркия, Дубай, Казакстан, Россия</p>
+            </div>
+            <div class="service-item">
+                <div class="service-icon">🚐</div>
+                <h3>Комфорттуу транспорт</h3>
+                <p>Ыңгайлуу автобустар жана тажрыйбалуу айдоочулар</p>
+            </div>
+        </div>
+
+        <div class="info-row">
+            <div class="why-us">
+                <h2 class="section-title">Эмне үчүн биз?</h2>
+                <div class="why-grid">
+                    <div class="why-chip">✔ Мыкты баалар</div>
+                    <div class="why-chip">✔ Коопсуздук</div>
+                    <div class="why-chip">✔ Тажрыйбалуу гиддер</div>
+                    <div class="why-chip">✔ Заманбап сервис</div>
+                    <div class="why-chip">✔ Тез каттоо</div>
+                    <div class="why-chip">✔ Жакшы сын-пикирлер</div>
+                </div>
+            </div>
+
+            <div class="stats-box">
+                <div class="stat-item">
+                    <h3>{{ about_info.stat_clients }}</h3>
+                    <p>Кардарлар</p>
+                </div>
+                <div class="stat-item">
+                    <h3>{{ about_info.stat_tours }}</h3>
+                    <p>Турлар</p>
+                </div>
+                <div class="stat-item">
+                    <h3>{{ about_info.stat_experience }}</h3>
+                    <p>Жылдык тажрыйба</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="map-section">
+            <h2 class="section-title">Биз картада</h2>
+            <div class="map-container">
+                <iframe src="{{ about_info.map_iframe_url }}" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+    {% else %}
+        <div class="alert alert-warning text-center py-5 mt-5">
+            <h4>Админкадан 'Биз жөнүндө' маалыматын кошуңуз!</h4>
+            <p>Админка → Биз жөнүндө маалымат → + Кошуу</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

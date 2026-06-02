@@ -1,0 +1,368 @@
+/* Жалпы жөндөөлөр */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    padding-top: 85px; /* Менюнун бийиктигине жараша контентти ылдый түшүрөт */
+    background-color: #f8f9fa;
+}
+
+/* NAVBAR ПАНЕЛИ */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .nav-container {
+    width: 95%;
+    max-width: 1300px;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+  }
+  
+  /* ЛОГОТИП */
+  .logo {
+    text-decoration: none;
+    font-size: 27px;
+    font-weight: 700;
+    color: #333;
+  }
+  .logo-accent {
+    color: #008489;
+  }
+  
+  /* МЕНЮ ЖАНА ИЗДӨӨ ТИЛКЕСИН ОҢГО ТИЗҮҮ */
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 30px; /* Меню менен издөө тилкесинин ортосундагы аралык */
+  }
+  
+  .menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+  }
+  
+  .menu a {
+    text-decoration: none;
+    color: #444;
+    font-size: 19px;
+    font-weight: 600;
+    transition: 0.3s;
+  }
+  
+  .menu a:hover, .menu a.active {
+    color: #008489;
+  }
+  /* забронироват  */
+  .btn-book {
+    background-color: #ffc107; /* Сары түс (акцент) */
+    color: #1A2B4C !important; /* Тексттин түсү кочкул */
+    padding: 10px 22px;
+    border-radius: 50px; /* Сопак формада */
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    display: inline-block;
+  }
+  
+  .btn-book:hover {
+    background-color: #e0a800; /* Чычканды үстүнө алып барганда караңгылайт */
+    transform: translateY(-2px); /* Бир аз өйдө көтөрүлөт */
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+    color: #000 !important;
+  }
+  
+  /* Мобилдик версияда баскыч толук туурасы менен чыгышы үчүн */
+  @media (max-width: 992px) {
+    .nav-actions {
+        width: 100%;
+        margin-top: 20px;
+    }
+    .btn-book {
+        display: block;
+        text-align: center;
+    }
+  }
+/* МОБИЛДИК ВЕРСИЯ */
+
+#menu-bar {
+  display: none;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 6px;
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #333;
+  border-radius: 10px;
+}
+
+
+/* MOBILE ONLY */
+@media (max-width: 768px) {
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 80px;
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - 80px);
+    background: white;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 40px;
+    transition: 0.4s ease;
+    gap: 30px;
+  }
+
+  #menu-bar:checked ~ .nav-menu {
+    left: 0;
+  }
+
+  .menu {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+  
+  
+  /* MENU END */
+  
+
+
+
+/* КАРТОЧКАЛАРДЫН ДИЗАЙНЫ */
+/* Башкы тема */
+.section-title {
+  font-weight: 800;
+  color: #1e293b;
+  text-transform: uppercase;
+  font-size: 24px;
+}
+
+/* Карточканын стили */
+.tour-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  height: 100%;
+  transition: 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+}
+
+.tour-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+/* Сүрөт жана узактыгы */
+.img-wrapper {
+  position: relative;
+  height: 170px;
+}
+
+.img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tour-duration {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #1e293b;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Тексттер */
+.tour-card-body {
+  padding: 15px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.tour-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #0f172a;
+}
+
+.tour-desc {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.4;
+  margin-bottom: 15px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Баа жана Баскыч */
+.tour-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 12px;
+}
+
+.tour-price {
+  font-size: 15px;
+  font-weight: 800;
+  color: #008080;
+}
+
+.tour-btn {
+  background: #1e293b;
+  color: #fff !important;
+  text-decoration: none;
+  padding: 5px 15px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.tour-btn:hover {
+  background: #008080;
+}
+
+/* МОБИЛДИК ВЕРСИЯ (Телефондо 2ден) */
+@media (max-width: 576px) {
+  .img-wrapper {
+      height: 120px; /* Телефондо сүрөт кичирээк */
+  }
+  .tour-title {
+      font-size: 14px;
+      margin-bottom: 5px;
+  }
+  .tour-desc {
+      font-size: 11px;
+      margin-bottom: 10px;
+  }
+  .tour-price {
+      font-size: 13px;
+  }
+  .tour-btn {
+      padding: 4px 10px;
+      font-size: 11px;
+  }
+}
+/* ФУТЕРДИ (КАРА БӨЛҮКТҮ) ЧОҢОЙТУУ */
+.footer {
+  background-color: #0f172a; /* Кочкул көк түс */
+  color: #cbd5e1;
+  padding: 70px 0 50px;
+  margin-top: 50px;
+}
+
+.logo-footer {
+  color: #ffffff !important;
+  font-weight: 800;
+  font-size: 26px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+.footer-heading {
+  color: #ffffff !important;
+  font-weight: 700;
+  margin-bottom: 25px;
+  position: relative;
+  display: inline-block;
+}
+
+/* Темалардын астындагы сары сызыкча */
+.footer-heading::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  width: 40px;
+  height: 2px;
+  background: #ffc107;
+  transform: translateX(-50%);
+}
+
+.footer-socials {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.social-icon {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff !important;
+  padding: 8px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.3s;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-icon:hover {
+  background: #008080 !important;
+  transform: translateY(-3px);
+}
+
+.contact-item {
+  margin-bottom: 10px;
+}
+
+.copyright {
+  margin-top: 20px;
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+/* Мобилдик версия үчүн (телефондо блоктор биринин астына бири түшөт) */
+@media (max-width: 768px) {
+  .col-md-4 {
+      margin-bottom: 40px;
+  }
+}

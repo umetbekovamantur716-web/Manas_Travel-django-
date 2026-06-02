@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manas Travel - {{ tour.title }}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'detailed.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<section class="tour-details mt-5"> 
+    <div class="container">
+        <div class="tour-header">
+            <h1>{{ tour.title }}</h1>
+            <div class="tour-meta">
+                <span><i class="fa-solid fa-clock"></i> {{ tour.duration }}</span>
+                {% if detail %}
+                <span><i class="fa-solid fa-user-group"></i> {{ detail.max_people }} адамга чейин</span>
+                <span><i class="fa-solid fa-location-dot"></i> {{ detail.location }}</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="tour-grid">
+            <div class="main-content">
+                <div class="gallery">
+                    {% if detail and detail.gallery_image1 %}
+                        <img src="{{ detail.gallery_image1.url }}" alt="{{ tour.title }}">
+                    {% else %}
+                        <img src="{{ tour.image.url }}" alt="{{ tour.title }}">
+                    {% endif %}
+                </div>
+
+                <h3>Тур туралуу</h3>
+                {% if detail %}
+                    <p>{{ detail.full_description }}</p>
+                {% else %}
+                    <p>{{ tour.description }}</p>
+                    <p class="text-muted">Админкадан толук маалыматы Кошуу</p>
+                {% endif %}
+
+                {% if detail %}
+                <div class="program">
+                    <h3>программа</h3>
+                    <div class="day">
+                        <h4>{{ detail.day1_title }}</h4>
+                        <p>{{ detail.day1_desc }}</p>
+                    </div>
+                    {% if detail.day2_title %}
+                    <div class="day">
+                        <h4>{{ detail.day2_title }}</h4>
+                        <p>{{ detail.day2_desc }}</p>
+                    </div>
+                    {% endif %}
+                    {% if detail.day3_title %}
+                    <div class="day">
+                        <h4>{{ detail.day3_title }}</h4>
+                        <p>{{ detail.day3_desc }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="includes-box">
+                    <div class="inc">
+                        <h4>эмнелер кирет</h4>
+                        <ul>
+                            {% for item in included_list %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="exc">
+                        <h4>эмнелер кирбейт</h4>
+                        <ul>
+                            {% for item in not_included_list %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+                <div class="sidebar">
+                <div class="booking-card">
+                    <h3>Turdu brondoo</h3>
+                    <div class="price">
+                        {% if detail and detail.price_per_person %}
+                            {{ detail.price_per_person }} сом
+                        {% else %}
+                            {{ tour.price }} сом
+                        {% endif %}
+                        <span>/ киши башына</span>
+                    </div>
+
+                    {% if messages %}
+                    <div class="alert alert-success mb-3" style="background: #d1fae5; color: #065f46; padding: 12px; border-radius: 8px; font-size: 14px;">
+                        {% for message in messages %}
+                        {{ message }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <form method="POST" action="{% url 'tour_detail' tour.id %}">
+                        {% csrf_token %}
+                        <label>Aty-jonuuzu</label>
+                        <input type="text" name="name" placeholder="Mysaly: Asan Usonov" required>
+
+                        <label>телефон номериниз</label>
+                        <input type="tel" name="phone" pattern="\d{13}" title=" цифра жазыңыз" placeholder="0700 123 456" required>
+
+                        <label>адам саны</label>
+                        <input type="number" name="people_count" min="1" value="1">
+
+                        <label>тандалган дата</label>
+                        <input type="date" name="date">
+
+                        <button type="submit" class="btn-book">брондо</button>
+                    </form>
+                    <p class="whatsapp-text"><i class="fa-brands fa-whatsapp"></i>ватсап аркылуу суроо беруу</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

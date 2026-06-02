@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'contact.css' %}">
+{% endblock %}
+
+{% block title %}Manas Travel - Контакты{% endblock %}
+{% block nav_contact %}active{% endblock %}
+
+{% block content %}
+     
+
+    <main class="main-content">
+        <div class="container">
+            <h1 class="page-title">Свяжитесь с нами</h1>
+
+            {% if contact_info %}
+            <div class="row g-4 justify-content-center">
+                <!-- Офис маалыматы -->
+                <div class="col-lg-5">
+                    <div class="contact-card">
+                        <h2 class="card-h">Наш офис</h2>
+                        <div class="map-box">
+                            {% if contact_info.map_iframe_url %}
+                            <iframe src="{{ contact_info.map_iframe_url }}" width="100%" height="200" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy"></iframe>
+                            {% else %}
+                            <img src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2924.1234567890123!2d73.00000000000001!3d42.00000000000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1234567890abcdef%3A0xabcdef1234567890!2sManas%20Travel%20Office!5e0!3m2!1sen!2skg!4v1700000000000" alt="Карта">
+                            {% endif %}
+                        </div>
+                        <div class="info-details">
+                            <p><i class="fa-solid fa-phone"></i> {{ contact_info.phone }}</p>
+                            <hr>
+                            <p><i class="fa-solid fa-envelope"></i> {{ contact_info.email }}</p>
+                            <hr>
+                            <p><i class="fa-solid fa-location-dot"></i> {{ contact_info.address }}</p>
+                            <hr>
+                            <div class="work-hours">
+                                <p><i class="fa-regular fa-clock"></i> <strong>Время работы:</strong></p>
+                                <p class="ms-4 text-secondary">{{ contact_info.work_hours }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Заявка формасы -->
+                <div class="col-lg-5">
+                    <div class="contact-card">
+                        <h2 class="card-h">Оставьте заявку</h2>
+                        
+                        {% if messages %}
+                        <div class="alert alert-success mb-3">
+                            {% for message in messages %}
+                            {{ message }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="text" name="name" class="form-control mb-3" placeholder="Ваше имя" required>
+                            <input type="tel" name="phone" pattern="\d{13}" title="Болгону 13 цифра жазыңыз" class="form-control mb-3" placeholder="Ваш телефон" required>
+                            <textarea name="message" class="form-control mb-3" rows="4" placeholder="Ваше сообщение" required></textarea>
+                            <button type="submit" class="btn-submit">Отправить</button>
+                        </form>
+                        <ul class="benefit-list mt-4">
+                            <li><i class="fa-solid fa-circle-check text-warning"></i> Бесплатная консультация</li>
+                            <li><i class="fa-solid fa-circle-check text-warning"></i> Работаем 24/7</li>
+                            <li><i class="fa-solid fa-circle-check text-warning"></i> Тысячи довольных клиентов</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Соцтармактар -->
+            <div class="social-block text-center">
+                <p class="text-secondary border-top pt-4">Мы в соцсетях:</p>
+                <div class="social-icons">
+                    {% if contact_info.instagram_url %}
+                    <a href="{{ contact_info.instagram_url }}" target="_blank" style="color: #E4405F;"><i class="fa-brands fa-instagram"></i></a>
+                    {% endif %}
+                    {% if contact_info.telegram_url %}
+                    <a href="{{ contact_info.telegram_url }}" target="_blank" style="color: #0088CC;"><i class="fa-brands fa-telegram"></i></a>
+                    {% endif %}
+                    {% if contact_info.facebook_url %}
+                    <a href="{{ contact_info.facebook_url }}" target="_blank" style="color: #1877F2;"><i class="fa-brands fa-facebook"></i></a>
+                    {% endif %}
+                    {% if contact_info.vk_url %}
+                    <a href="{{ contact_info.vk_url }}" target="_blank" style="color: #4C75A3;"><i class="fa-brands fa-vk"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-warning text-center py-5">
+                <h4>Админкадан контакт маалыматтарын кошуңуз!</h4>
+                <p>Админка → Контакт баракчасы → + Кошуу</p>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+
+
+
+{% endblock %}

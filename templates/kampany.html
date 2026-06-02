@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'kampany.css' %}">
+{% endblock %}
+
+{% block title %}Manas Travel - О компании{% endblock %}
+{% block nav_about %}active{% endblock %}
+
+{% block content %}
+<main class="about-modern" style="padding-top: 100px;">
+
+        <section class="about-intro-split container py-100">
+            <div class="intro-grid">
+                <div class="intro-text">
+                    <span class="tag">Explore Kyrgyzstan</span>
+                    <h1 class="display-1 fw-800">{{ about_info.title|default:"Больше, чем просто" }} <br><span class="outline">путешествие</span></h1>
+                    <p class="desc">{{ about_info.description|default:"Мы верим, что настоящие сокровища не на картах, а в историях, которые мы проживаем. Manas Travel — это ваш личный проводник в мир неизведанного Кыргызстана." }}</p>
+                    <div class="stats-mini">
+                        <div><strong>{{ about_info.stat_experience|default:"5+" }}</strong> <span>Лет опыта</span></div>
+                        <div><strong>{{ about_info.stat_clients|default:"12к" }}</strong> <span>Гостей</span></div>
+                        <div><strong>100%</strong> <span>Безопасно</span></div>
+                    </div>
+                </div>
+                <div class="intro-images">
+                    <div class="img-box item-1 shadow-lg"><img src="https://gora-club.ru/assets/images/dagestan/img_9301.JPG" alt="Mountains"></div>
+                    <div class="img-box item-2 shadow-lg"><img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=400&q=60" alt="Arstanbap"></div>
+                </div>
+            </div>
+        </section>
+    
+        <section class="fun-facts bg-dark py-100">
+            <div class="container">
+                <h2 class="text-white text-center mb-5 fw-800">Немного фактов о нас</h2>
+                <div class="facts-grid">
+                    <div class="fact-card">
+                        <span class="icon">{{ about_info.fact_1_icon|default:"🏔️" }}</span>
+                        <h3>{{ about_info.fact_1_number|default:"500+" }}</h3>
+                        <p>{{ about_info.fact_1_text|default:"Раз мы поднимались на вершины Тянь-Шаня с нашими туристами." }}</p>
+                    </div>
+                    <div class="fact-card">
+                        <span class="icon">{{ about_info.fact_2_icon|default:"☕" }}</span>
+                        <h3>{{ about_info.fact_2_number|default:"2000+" }}</h3>
+                        <p>{{ about_info.fact_2_text|default:"Литров горного чая выпито у костра во время наших походов." }}</p>
+                    </div>
+                    <div class="fact-card">
+                        <span class="icon">{{ about_info.fact_3_icon|default:"🚐" }}</span>
+                        <h3>{{ about_info.fact_3_number|default:"150к" }}</h3>
+                        <p>{{ about_info.fact_3_text|default:"Километров проехали наши джипы по самым диким тропам." }}</p>
+                    </div>
+                    <div class="fact-card">
+                        <span class="icon">{{ about_info.fact_4_icon|default:"🤝" }}</span>
+                        <h3>{{ about_info.fact_4_number|default:"0" }}</h3>
+                        <p>{{ about_info.fact_4_text|default:"Скрытых комиссий. Мы за честный и открытый туризм." }}</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <section class="visual-gallery py-100">
+            <div class="container">
+                <h2 class="fw-800 mb-4">Наши моменты</h2>
+                
+                {% if gallery_images %}
+                <!-- Галерея слайдер -->
+                <div class="gallery-slider-wrapper">
+                    <div class="gallery-slider" id="gallerySlider">
+                        {% for image in gallery_images %}
+                        <div class="gallery-slide" style="background-image: url('{{ image.image.url }}');">
+                            {% if image.title %}
+                            <div class="slide-caption">{{ image.title }}</div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Навигация -->
+                    <button class="slider-btn prev" id="prevBtn">&#10094;</button>
+                    <button class="slider-btn next" id="nextBtn">&#10095;</button>
+                    
+                    <!-- Индикаторлор -->
+                    <div class="slider-dots" id="sliderDots"></div>
+                </div>
+                {% else %}
+                <p class="text-center text-muted">Админкадан галерея сүрөттөрүн кошуңуз!</p>
+                {% endif %}
+            </div>
+        </section>
+    
+        <section class="principles container py-100">
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <h2 class="fw-800 display-5">Почему мы <br>делаем это?</h2>
+                    <p class="mt-4 text-secondary">Мы верим, что Джалал-Абад и весь Кыргызстан — это жемчужина, которую должен увидеть каждый. Наша команда состоит из местных жителей, которые любят свою землю.</p>
+                    <a href="{% url 'turs_home' %}" class="btn-main mt-4">Смотреть туры</a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="p-list">
+                        <div class="p-item">
+                            <i class="fas fa-heart"></i>
+                            <div>
+                                <h4>{{ about_info.principle_1_title|default:"Душевный подход" }}</h4>
+                                <p>{{ about_info.principle_1_desc|default:"Вы для нас не просто клиент, вы — наш гость. А гость в Кыргызстане — это святое." }}</p>
+                            </div>
+                        </div>
+                        <div class="p-item">
+                            <i class="fas fa-check-shield"></i>
+                            <div>
+                                <h4>{{ about_info.principle_2_title|default:"Надежность" }}</h4>
+                                <p>{{ about_info.principle_2_desc|default:"Собственный автопарк и опытные гиды со стажем более 10 лет." }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+    </main>
+
+<!-- Галерея слайдер JavaScript -->
+<script>
+(function() {
+    const slider = document.getElementById('gallerySlider');
+    if (!slider) return;
+    
+    const slides = slider.querySelectorAll('.gallery-slide');
+    if (slides.length <= 1) return;
+    
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsContainer = document.getElementById('sliderDots');
+    
+    let currentSlide = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    // Точкаларды түзүү
+    slides.forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.className = 'dot' + (index === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+    });
+    
+    const dots = dotsContainer.querySelectorAll('.dot');
+    
+    function updateSlider() {
+        slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentSlide);
+        });
+    }
+    
+    function goToSlide(index) {
+        currentSlide = index;
+        if (currentSlide < 0) currentSlide = slides.length - 1;
+        if (currentSlide >= slides.length) currentSlide = 0;
+        updateSlider();
+    }
+    
+    function nextSlide() { goToSlide(currentSlide + 1); }
+    function prevSlide() { goToSlide(currentSlide - 1); }
+    
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+    
+    // Свайп колдоо (мобилдик)
+    slider.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+    
+    slider.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, {passive: true});
+    
+    function handleSwipe() {
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) nextSlide();
+            else prevSlide();
+        }
+    }
+    
+    // Авто-оюн (кааласаң)
+    // setInterval(nextSlide, 5000);
+})();
+</script>
+{% endblock %}
