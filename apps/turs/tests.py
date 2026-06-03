@@ -36,3 +36,4 @@ class TravelSliderModelTest(TestCase):
             self.slider.image_url,
             "https://example.com/image.jpg"
         )
+
